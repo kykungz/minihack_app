@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   def activity2
     render file: Rails.public_path+"Page2.html", layout: true
   end
-    def sol
+  def sol
     render file: Rails.public_path+"game-sol.html", layout: true
   end
 end
