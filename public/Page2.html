@@ -25,28 +25,43 @@
         <h1>1. Modify the code so that the game does not start until you click the restart button. Describe the modifications you make and show the part of the code you modify.</h1>
     </div>
     <div class="qa">
-        <p>this is answer 1.</p>
+        <p>
+            Change onclick of myrestartbutton to startGame(). Then in startGame() function, set myrestartbutton.onlclick to restartGame.
+            <img src="/images/1.png" alt="">
+            <img src="/images/2.png" alt="">
+        </p>
     </div>
     <div class="qq">
         <h1>2. Modify the code so that the obstacles’ color is yellow instead of green and the game piece is blue instead of red. Describe the modifications you make and show the part of the code you modify.
 </h1>
     </div>
     <div class="qa">
-        <p>this is answer 2.</p>
+        <p>
+            In <code>myGamePiece = new component(30, 30, "red", 10, 75);</code> <br>change from “red” to “blue”. And in <br><code>myObstacles.push(new component(10, height, "green", x, 0));</code><br><code>myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+            </code><br>change from “green” to “yellow”.
+
+        </p>
     </div>
     <div class="qq">
         <h1>3. Add the “PAUSE” button so that when you click on it the game freezes. If you click on it again, the game resumes. Describe the modifications you make and show the part of the code you modify.
 </h1>
     </div>
     <div class="qa">
-        <p>this is answer 3.</p>
+        <p>
+            Add this tag to the body section
+            <img src="/images/3.png" alt="">
+        </p>
     </div>
     <div class="qq">
         <h1>
   4. Modify the code so that you are allowed three chances before the game freezes and needs to be restarted. Once the game piece crashes with the obstacle and this is not crash number three, the game restarts automatically and the score continues with what it was at the crash event. Describe the modifications you make and show the part of the code you modify.
   </h1>
         <div class="qa">
-            <p>this is answer 4.</p>
+            <p>
+                I add 1 more attribute name hit initially equals to 0. Changes code in updateGameArea function when there is a collision instead of making the game stop I increase the hit variable by 1. And add if statement to check whether the hit variable is >= 3.
+                If it is, do like the original code and reset the hit, if not, clear the obstacles by myObstacles = [];
+            </p>
+            <img src="/images/4.png" alt="">
         </div>
     </div>
 </body>
