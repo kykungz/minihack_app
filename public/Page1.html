@@ -18,8 +18,6 @@
         div.qa p {
             color: red;
         }
-
-        div.image {}
     </style>
 </head>
 
@@ -30,7 +28,7 @@
         <h1>1. Draw a complete DOM tree of this page. Warning: it will take some time to draw the complete DOM of the page.</h1>
     </div>
     <div class="qa">
-      <a href="dom.html">answer for solution 1.</a>
+        <a href="dom.html">answer for solution 1.</a>
     </div>
     <div class="qq">
         <h1>2. What is the CSS “box model” for the section “Instructors Teaching Assistants” like? You need to show me everything from the outer container down to the innermost one. You must also include the size details for content, padding, border, and margin
@@ -68,9 +66,10 @@
       </h1>
     </div>
     <div class="qa">
-        <p>with the dev tools opened, we can see which elements are changing. Inside id=teaser div, the div with id=convnetvis is changing. So I opened the page source to find which js code is manipulating these changes. I used ctrl-f to find for the word
-            ‘convnetvis’ because somehow the js will get the element using its id. I can’t find one in this page, so I look for other script tag that linked to external js files. And then I found one match for the id in http://cs231n.stanford.edu/convnet_demo/convnet_demo.js
-            and it is actually getting the convnetvis element by id. I found it in the function name draw_network_state. responsible JS code:</p>
+        <p>&emsp;With the dev tools opened, we can see which elements are changing. Inside id=teaser div, the div with id=convnetvis is changing. So I opened the page source to find which js code is manipulating these changes. I used ctrl-f to find for the
+            word ‘convnetvis’ because somehow the js will get the element using its id. I can’t find one in this page, so I look for other script tag that linked to external js files. And then I found one match for the id in <a href="http://cs231n.stanford.edu/convnet_demo/convnet_demo.js">
+              http://cs231n.stanford.edu/convnet_demo/convnet_demo.js
+            </a> and it is actually getting the convnetvis element by id. I found it in the function name draw_network_state.<br>Responsible JS code:</p>
         <code>var draw_network_state = function(preds) { var ww = $(window).width();<br>
 var parent_div = document.getElementById('convnetvis'); parent_div.innerHTML = '';<br>
 // draw convnet activations var N = net.layers.length; for(var i=0;i&lt;N;i++) {<br>
