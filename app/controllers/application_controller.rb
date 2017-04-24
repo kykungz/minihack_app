@@ -3,4 +3,7 @@ class ApplicationController < ActionController::Base
   def home
       render html: "Welcome to Kongpon, Thitiwat and Worawat Mini-Hack website"
   end
+  def activity1
+    render file: Rails.public_path+"Page1.html", layout: true
+  end
 end
