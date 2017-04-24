@@ -11,39 +11,55 @@
             font-size: 17px;
         }
 
-        .qa p {
+        div.qa {
+            margin-left: 2%;
+        }
+
+        div.qa p {
             color: red;
         }
+
+        div.image {}
     </style>
 </head>
 
 <body>
     <h1> The solution for activity 1 : "Hack" morning section</h1>
-    <p>Visit the following website. http://cs231n.stanford.edu/
-With the help of developer tools:</p>
+    <p>Visit the following website. http://cs231n.stanford.edu/ With the help of developer tools:</p>
     <div class="qq">
         <h1>1. Draw a complete DOM tree of this page. Warning: it will take some time to draw the complete DOM of the page.</h1>
     </div>
     <div class="qa">
-        this is answer 1.
+      <a href="dom.html">answer for solution 1.</a>
     </div>
     <div class="qq">
         <h1>2. What is the CSS “box model” for the section “Instructors Teaching Assistants” like? You need to show me everything from the outer container down to the innermost one. You must also include the size details for content, padding, border, and margin
         for each box.</h1>
     </div>
     <div class="qa">
-        <h2>Instructors Box</h2>
+        <h3>Instructors Box</h3>
         <img src="/images/instructors.png" alt="">
-        <h2>Teaching Assistance Box</h2>
+        <h3>Teaching Assistance Box</h3>
         <img src="/images/ta.png" alt="">
-        <h2>Each Employee Box</h2>
+        <h3>Each Employee Box</h3>
         <img src="/images/employee.png" alt="">
     </div>
     <div class="qq">
         <h1>3. Locally, if you want to insert a random photo just below that of “Serena Yeung”, how would you do it? Describe the steps and capture the screenshot showing that you actually did it.</h1>
     </div>
     <div class="qa">
-        this is answer 3.
+        <h2>Step-by-step</h2>
+        <ol>
+            <li>Open dev tools.</li>
+            <li>Find html element that matches with Instructors box.</li>
+            <li>Right click on the element (div.col-md-2) and choose Edit as HTML.</li>
+            <li>Copy one of the instructor’s div.</li>
+            <li>Paste it under Serena Yueng div.</li>
+            <li>Go inside that div, inside a, inside div, you will find img tag.</li>
+            <li>Change the src attribute of the tag to the img you want. </li>
+        </ol>
+        <img src="/images/hacked.png" alt="">
+        <img src="/images/hacked-code.png" alt="">
     </div>
     <div class="qq">
         <h1>
@@ -52,7 +68,55 @@ With the help of developer tools:</p>
       </h1>
     </div>
     <div class="qa">
-        this is answer 4.
+        <p>with the dev tools opened, we can see which elements are changing. Inside id=teaser div, the div with id=convnetvis is changing. So I opened the page source to find which js code is manipulating these changes. I used ctrl-f to find for the word
+            ‘convnetvis’ because somehow the js will get the element using its id. I can’t find one in this page, so I look for other script tag that linked to external js files. And then I found one match for the id in http://cs231n.stanford.edu/convnet_demo/convnet_demo.js
+            and it is actually getting the convnetvis element by id. I found it in the function name draw_network_state. responsible JS code:</p>
+        <code>var draw_network_state = function(preds) { var ww = $(window).width();<br>
+var parent_div = document.getElementById('convnetvis'); parent_div.innerHTML = '';<br>
+// draw convnet activations var N = net.layers.length; for(var i=0;i&lt;N;i++) {<br>
+var L = net.layers[i];<br>
+if(L.layer_type == 'softmax') { continue; }<br>
+if(ww < 950) {<br>
+// we have to collapse. skip conv layers<br>
+if(L.layer_type === 'conv') { continue; } }<br>
+if(ww < 660) {<br>
+// we have to collapse even more. skip pool layers<br>
+if(L.layer_type === 'pool') { continue; } }<br>
+if(ww < 522) {<br>
+if(L.layer_type === 'softmax') { continue; } }<br>
+if(ww < 450) {<br>
+if(!(i === 0 || i === 4 || i === 9 || i === 14)) {<br>
+continue; }<br>
+}<br>
+/*<br>
+if(!(L.layer_type === 'input' || L.layer_type == 'relu' || L.layer_type == 'softmax' ||<br>
+L.layer_type)) {<br>
+      continue; // leave out<br>
+    }<br>
+*/<br>
+var div = document.createElement('div'); div.className = 'layer';<br>
+if(i === 0) {<br>
+// data layer<br>
+draw_activations_COLOR(div, L.out_act, 2); // draw Vol into canv div.setAttribute("id", "inputlayer");<br>
+} else {<br>
+var sx = L.out_act.sx;<br>
+if(sx === 32) s = 1;<br>
+if(sx === 16) s = 2;<br>
+if(sx === 8) s = 4;<br>
+if(sx === 4) s = 8;<br>
+if(sx === 1) s = 32; draw_activations(div, L.out_act, s);<br>
+}<br>
+parent_div.appendChild(div); }<br>
+// append predictions<br>
+var probsdiv = document.createElement('div'); div.setAttribute("id", "probsdiv"); probsdiv.className = 'layer';<br>
+for(var k=0;k&lt;5;k++) {<br>
+var r = document.createElement('div');<br>
+r.className = 'pp';<br>
+r.innerHTML = classes_txt[preds[k].k];<br>
+$(r).animate({'width' : Math.floor(preds[k].p/num_test_samples*150)}, 200); probsdiv.appendChild(r);<br>
+} parent_div.appendChild(probsdiv);<br>
+
+}</code>
     </div>
     <div class="qq">
         <h1>
@@ -60,7 +124,16 @@ With the help of developer tools:</p>
       </h1>
     </div>
     <div class="qa">
-        this is answer 5.
+        <p>search for ‘actmap’ because the canvas tag has ‘actmap’ as class name. then search for ‘canvas’ then I found this function that loads img from convnet_demo/cifar10_batch_50_small.png</p>
+        <code>var load_data_batch = function() { var data_img_elt = new Image(); data_img_elt.onload = function() {<br>
+var data_canvas = document.createElement('canvas');<br>
+data_canvas.width = data_img_elt.width;<br>
+data_canvas.height = data_img_elt.height;<br>
+var data_ctx = data_canvas.getContext("2d");<br>
+data_ctx.drawImage(data_img_elt, 0, 0); // copy it over... bit wasteful :( <br>
+img_data = data_ctx.getImageData(0, 0, data_canvas.width, data_canvas.height); resources_have += 1;<br>
+if(resources_have >= resources_need) { init_done(); } };<br>
+data_img_elt.src = "convnet_demo/cifar10_batch_50_small.png"; }</code>
     </div>
     <div class="qq">
         <h1>
@@ -68,7 +141,8 @@ With the help of developer tools:</p>
       </h1>
     </div>
     <div class="qa">
-        this is answer 6.
+        <p>Go to source tab in dev tools. Open the file style.css and find .pp class. Edit the background-color attribute to rgb(0,0,255)</p>
+        <img src="images/1-6-1.png" alt="" width="50%" height="50%">
     </div>
 </body>
 
